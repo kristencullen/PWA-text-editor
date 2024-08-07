@@ -20,7 +20,7 @@ module.exports = () => {
         filename: 'index.html',
       }),
       new InjectManifest({
-        swSrc: './src/src-sw.js',
+        swSrc: './src-sw.js',
         swDest: 'src-sw.js',
       }),
       new WebpackPwaManifest({
@@ -31,7 +31,14 @@ module.exports = () => {
         theme_color: '#000000',
         start_url: '.',
         display: 'standalone',
-        icon: path.resolve(__dirname, 'src/images/icon.png'), // Adjust the path to your icon
+        icons: [
+          {
+            src: path.resolve('src/images/logo.png'),
+            sizes: [96, 128, 192, 256, 384, 512],
+            destination: path.join('assets', 'icons'),
+          },
+        ],
+        // path.resolve(__dirname, 'src/images/logo.png'), // Adjust the path to your icon
       }),
     ],
 
@@ -48,6 +55,7 @@ module.exports = () => {
             loader: 'babel-loader',
             options: {
               presets: ['@babel/preset-env'],
+              plugins: ['@babel/plugin-proposal-object-rest-spread', '@babel/transform-runtime'],
             },
           },
         },
